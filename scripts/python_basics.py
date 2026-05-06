@@ -302,10 +302,16 @@ from collections import Counter
 c = Counter()
 with open("logs/access.log") as f:
     for line in f:
-        path = re.search(r'\"\w+ (\/\w+\/\w+) \w+\/\d\.\d',line)
-        print (path.group(1))
+        match = re.search(r' \/\w+(\/\w+)?(\/\d+)? ',line)[0]
+        c[match] += 1
+
+for match, count in c.most_common(2):
+    print(f"{match}: {count}")
+print (f"{match}: {count}")
 
 
+
+#10.0.87.137 - - [28/Apr/2026:00:00:00 +0000] "GET /api/products HTTP/1.1" 200 1951 "-" "curl/8.4.0" 808
 
 # ---- 4e: Common patterns you'll need this month ----
 # \d       any digit (0-9)
