@@ -1,4 +1,3 @@
-cat > articulation/python-cheatsheet.md << 'EOF'
 # Python Cheatsheet — Working Subset for Log Parsing
 
 Living document. Each time I look up syntax during a drill, it goes here. Reviewed before the next session. As recall improves, items shift from "look it up" to "internalized" — but they stay in the doc as a marker of progress.
@@ -288,4 +287,3 @@ _(Append here every time you reach for documentation. When something stops needi
 - Day 3: `.split()` empty-string edge case with explicit delimiter
 - Day 4: regex bracket escaping `\[ \]` — internalized after drill 2
 
-EOF
