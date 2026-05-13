@@ -72,3 +72,35 @@ awk '{print $1}' file | sort | uniq -c | sort -rn | head -10
 
 # Print specific fields only
 awk '{print $1, $9, $10}' file
+
+# ── sed ──────────────────────────────────────────────────────────────────────
+
+# Substitute (s = replace, g = all matches on line, i = case insensitive)
+sed 's/foo/bar/g' file
+sed -i 's/foo/bar/g' file              # in-place edit
+
+# Delete lines
+sed '/pattern/d' file                  # delete matching lines
+sed '/^$/d' file                       # delete blank lines
+
+# Print only matching lines (-n suppresses default output)
+sed -n '/ERROR/p' file
+sed -n '5p' file                       # print only line 5
+
+# Anchors
+sed '/^ERROR/d' file              # delete lines starting with ERROR
+sed '/ERROR$/d' file              # delete lines ending with ERROR
+sed '/^$/d' file                  # delete blank lines
+sed 's/^/> /' file                # prepend "> " to every line
+sed 's/$/;/' file                 # append ";" to every line
+sed 's/^[[:space:]]*//' file      # strip leading whitespace
+sed 's/[[:space:]]*$//' file      # strip trailing whitespace
+sed '/^#/d' file                  # delete comment lines
+
+# Chain multiple commands with ;
+sed 's/.*\[//;s/\].*//' file           # extract between brackets
+
+# Address ranges
+sed '1,10 s/foo/bar/'                  # only lines 1-10
+sed '/start/,/end/ s/foo/bar/'         # only between matching lines
+
