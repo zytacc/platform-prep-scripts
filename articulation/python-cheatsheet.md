@@ -287,3 +287,57 @@ _(Append here every time you reach for documentation. When something stops needi
 - Day 3: `.split()` empty-string edge case with explicit delimiter
 - Day 4: regex bracket escaping `\[ \]` — internalized after drill 2
 
+## Day 11 — File I/O, CLI, JSON
+
+### Default file read pattern
+
+```python
+import sys
+
+with open(sys.argv[1]) as f:
+    for line in f:
+        line = line.rstrip()
+        # process line
+```
+
+This handles ~90% of coding rounds. Don't forget `.rstrip()`.
+
+### JSON-lines parsing
+
+```python
+import json
+
+with open(sys.argv[1]) as f:
+    for line in f:
+        line = line.rstrip()
+        if not line:
+            continue
+        try:
+            record = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        status = record.get('status')
+        # use record
+```
+
+Key rules:
+- `json.loads(line)` inside the loop — the `s` is for "string"
+- `record.get(key)` not `record[key]` — logs have inconsistent fields
+- Skip malformed lines with `continue`; don't crash the whole script
+
+### Format check
+
+```bash
+head -1 path/to/file
+```
+
+Line starts and ends with `{...}` → JSON-lines, use `loads` in a loop.
+Line is just `[` or `{` with no close → one document, use `json.load(f)`.
+
+### Top anti-patterns
+
+| Don't | Do |
+|---|---|
+| `f.readlines()` to iterate | `for line in f:` |
+| `json.load(f)` on JSON-lines | `json.loads(line)` in a loop |
+| `record['key']` on log data | `record.get('key')` |

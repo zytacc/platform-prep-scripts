@@ -1,0 +1,118 @@
+# ============================================================
+# DAY 11 DRILLS — File I/O, CLI, JSON parsing
+# ============================================================
+# All drills go in: scripts/script-7-file-io.py
+# Work through 11.1, comment it out, then 11.2, comment it out, then 11.3.
+# Final committed version = whatever's active when you finish 11.3.
+#
+# Rules:
+#   - Cheatsheet open. No Google. No AI autocomplete.
+#   - Time each one. Note where you stalled.
+#   - If you finish under target, mark "clean". If over, mark "with help".
+#   - After all three, do one closed-book re-do of Drill 1 (see bottom).
+# ============================================================
+
+
+# ------------------------------------------------------------
+# DRILL 11.1 — Warmup: line counter
+# ------------------------------------------------------------
+# Target: 10 min
+# File: scripts/script-7-file-io.py
+#
+# Build a script that takes a file path as its only argument and
+# prints the total number of lines in the file.
+#
+# Spec:
+#   ./script-7-file-io.py logs/syslog.log
+#   -> prints: 10000
+#
+# Requirements:
+#   - Use sys.argv[1] for the file path.
+#   - Use `with open(...)` and `for line in f:`.
+#   - Print only the number to stdout. Nothing else.
+#
+# Test:
+#   ./script-7-file-io.py logs/syslog.log
+#   wc -l logs/syslog.log    # numbers should match
+#
+# When done: comment out this section, move to 11.2.
+
+
+# ------------------------------------------------------------
+# DRILL 11.2 — Core: pattern matcher with hybrid input
+# ------------------------------------------------------------
+# Target: 20 min
+# File: scripts/script-7-file-io.py (same file, replace 11.1 logic)
+#
+# Build a CLI tool that counts lines matching a regex.
+# Must accept input from either a file argument OR stdin.
+#
+# Spec:
+#   ./script-7-file-io.py "ERROR" logs/syslog.log
+#   cat logs/syslog.log | ./script-7-file-io.py "ERROR"
+#
+# Both should produce the same number.
+#
+# Requirements:
+#   - First argument is always the regex pattern.
+#   - Second argument is optional file path; if absent, read stdin.
+#   - Use re.search (not re.match) so the pattern can match anywhere.
+#   - Print only the count to stdout.
+#   - If no arguments at all, print usage to stderr and exit 1.
+#   - Wrap the main logic in `if __name__ == '__main__':`.
+#
+# Test:
+#   ./script-7-file-io.py "ERROR" logs/syslog.log
+#   grep -c "ERROR" logs/syslog.log    # should match
+#   cat logs/syslog.log | ./script-7-file-io.py "ERROR"
+#   ./script-7-file-io.py              # should error and exit 1
+#
+# When done: comment out this section, move to 11.3.
+
+
+# ------------------------------------------------------------
+# DRILL 11.3 — Stretch: JSON-lines analyzer
+# ------------------------------------------------------------
+# Target: 25 min
+# File: scripts/script-7-file-io.py (same file, replace 11.2 logic)
+#
+# Read logs/app.json.log (JSON-lines format). For each record:
+#   - Parse the JSON; skip malformed lines without crashing
+#   - Skip records missing the 'status' field
+#
+# Compute and print:
+#   total_2xx: <count of status 200-299>
+#   total_5xx: <count of status 500-599>
+#   error_rate: <5xx as % of (2xx + 5xx), formatted to 2 decimals>
+#
+# Spec output (example):
+#   total_2xx: 18432
+#   total_5xx: 612
+#   error_rate: 3.21%
+#
+# Requirements:
+#   - Use `with open()` and `for line in f:`.
+#   - Use `json.loads(line)` with try/except json.JSONDecodeError.
+#   - Use record.get('status') — do NOT use record['status'].
+#   - File path comes from sys.argv[1].
+#
+# Test:
+#   ./script-7-file-io.py logs/app.json.log
+#
+# Stretch question after finishing (think, don't code):
+#   How would the code change if 'status' were nested inside
+#   record['response']['status'] instead?
+
+
+# ------------------------------------------------------------
+# DRILL 11.4 — Closed-book re-do (do this AFTER 11.1-11.3)
+# ------------------------------------------------------------
+# Target: 8 min, cheatsheet CLOSED, blank file
+#
+# Open a fresh file (scratch.py is fine, NOT script-7-file-io.py).
+# Redo Drill 11.1 from scratch. No cheatsheet.
+# Just: take a file path, count lines, print the number.
+#
+# Stop the timer the moment it runs correctly.
+# If you stalled anywhere, note the specific gap — that's
+# the targeted rep for tomorrow, not "study more."
