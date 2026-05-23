@@ -341,3 +341,9 @@ Line is just `[` or `{` with no close → one document, use `json.load(f)`.
 | `f.readlines()` to iterate | `for line in f:` |
 | `json.load(f)` on JSON-lines | `json.loads(line)` in a loop |
 | `record['key']` on log data | `record.get('key')` |
+
+## Day 12 — re, Counter, defaultdict, argparse, datetime
+
+### Regex: the only patterns you need to internalize
+
+```python
